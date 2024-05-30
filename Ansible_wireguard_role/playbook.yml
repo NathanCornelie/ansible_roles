@@ -1,0 +1,13 @@
+# - hosts: server
+#   become: yes
+#   become_method: doas
+#   become_user: root
+#   roles:
+#     - role: ./wg_setup_server
+
+- hosts: servers 
+  vars_files:
+    - host_passwords.yml 
+  
+  roles:
+    - role: ./wg_add_user

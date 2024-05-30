@@ -1,0 +1,4 @@
+---
+# vars file for wireguard_add_user
+
+TEMPLATE_USERS: []

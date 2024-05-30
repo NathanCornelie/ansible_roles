@@ -1,0 +1,3 @@
+---
+# defaults file for wg_setup_server
+PORT: "443"

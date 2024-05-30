@@ -1,0 +1,6 @@
+---
+# tasks file for wireguard_add_user
+- import_tasks: create_config.yml
+  become: true
+  tags: 
+    - config

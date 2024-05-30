@@ -1,0 +1,10 @@
+all: 
+  children: 
+    servers:  
+        hosts:
+          bsd: 
+            ansible_host: 172.30.12.2
+    clients: 
+      hosts: 
+        nathan:
+          ansible_host: 172.30.12.3

@@ -1,0 +1,21 @@
+ansible_become_user: root 
+ansible_password: "{{ vault_bsd_password }}" 
+ansible_become_method: "doas"
+ansible_become_password: "{{ vault_bsd_password }}" 
+PORT: 443
+SERVER_IP: 1
+WIREGUARD_USERS: 
+  - name: CornelieNathan
+    ips:
+      - 10.0.0.2 
+      - 10.0.0.4 
+
+  - name: MarieLaS
+    ips:
+      - 10.0.0.3
+      - 10.0.0.5
+
+  
+
+  
+  
