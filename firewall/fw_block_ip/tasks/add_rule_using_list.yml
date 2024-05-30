@@ -2,20 +2,6 @@
   ansible.builtin.shell: cat /etc/pf.conf
   register: remote_file
   become: true
-- name: S'assurer que le fichier de blacklist existe
-  file:
-    path: "/etc/blacklist"
-    state: touch
-  become: true
-
-- name:
-  lineinfile:
-    line: "{{ ip }}"
-    dest: "/etc/blacklist"
-  become: true
-  loop: "{{ IPS_TO_BLOCK}}"
-  loop_control:
-    loop_var: ip
 
 - name: set clients vars
   ansible.builtin.set_fact:
@@ -49,24 +35,15 @@
     create: yes
   become: true
 
-# - name: add block in rule
-#   lineinfile:
-#     path: "/etc/pf.conf"
-#     line: "block in from { blacklist } to any"
-#   become: true
-
-# - name: add block out rule
-#   lineinfile:
-#     path: "/etc/pf.conf"
-#     line: "block out from any to  { blacklist }"
-#   become: true
-
-- name: add block to rules
-  blockinfile:
+- name: add block in rule
+  lineinfile:
     path: "/etc/pf.conf"
-    marker: "# {mark} ANSIBLE MANAGED BLOCK"
-    block: |
-      table <blacklist> persist file "/etc/blacklist"
-      block in  from <blacklist> to any
-      block out  from any to an <blacklist>
+    line: "block in from { blacklist } to any"
   become: true
+
+- name: add block out rule
+  lineinfile:
+    path: "/etc/pf.conf"
+    line: "block out from any to  { blacklist }"
+  become: true
+

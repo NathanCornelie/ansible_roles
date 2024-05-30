@@ -1,0 +1,24 @@
+- name: S'assurer que le fichier de blacklist existe
+  file:
+    path: "/etc/blacklist"
+    state: touch
+  become: true
+
+- name:
+  lineinfile:
+    line: "{{ ip }}"
+    dest: "/etc/blacklist"
+  become: true
+  loop: "{{ IPS_TO_BLOCK}}"
+  loop_control:
+    loop_var: ip
+
+- name: add block to rules
+  blockinfile:
+    path: "/etc/pf.conf"
+    marker: "# {mark} ANSIBLE MANAGED BLOCK"
+    block: |
+      table <blacklist> persist file "/etc/blacklist"
+      block in  from <blacklist> to any
+      block out  from any to  <blacklist>
+  become: true
