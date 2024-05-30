@@ -1,0 +1,8 @@
+---
+# tasks file for fw_block_ip
+
+- name: add rules to fw
+  include_tasks: add_rule.yml
+  # loop: "{{ IPS_TO_BLOCK }}"
+  # loop_control:
+  #   loop_var: ip
