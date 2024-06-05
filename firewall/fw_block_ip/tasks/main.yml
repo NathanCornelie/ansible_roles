@@ -1,0 +1,14 @@
+---
+# tasks file for fw_block_ip
+
+- name: add rules to fw
+  include_tasks: add_rule_using_table.yml
+  # tags: table
+
+# - name: add rules to fw
+#   include_tasks: add_rule_using_list.yml
+#   tags: list
+
+- name: Verify rulset
+  ansible.builtin.shell:  pfctl -n -f /etc/pf.conf &&  pfctl -f /etc/pf.conf
+  become: true

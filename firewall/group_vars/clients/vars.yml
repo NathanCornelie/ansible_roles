@@ -1,0 +1,4 @@
+ansible_become_user: root 
+ansible_password: "{{ vault_nathan_password }}" 
+ansible_become_password: "{{ vault_nathan_password }}" 
+PORT: 443

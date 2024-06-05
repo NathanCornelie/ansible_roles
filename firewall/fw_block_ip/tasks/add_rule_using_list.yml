@@ -1,0 +1,49 @@
+- name: Get content of remote file
+  ansible.builtin.shell: cat /etc/pf.conf
+  register: remote_file
+  become: true
+
+- name: set clients vars
+  ansible.builtin.set_fact:
+    blacklist: "{{ remote_file.stdout_lines | select('match','^blacklist=') | list }}"
+
+- name: Extraire la sous-chaîne entre accolades
+  set_fact:
+    sous_chaine: "{{ blacklist | regex_search('(?<=\\{)[^}]+(?=\\})') | trim }}"
+
+- name: Convertir la sous-chaîne en liste
+  set_fact:
+    ip_list: "{{ sous_chaine.split() }}"
+
+- name: Ajouter des valeurs à la liste existante
+  set_fact:
+    ip_list: "{{ ip_list +  IPS_TO_BLOCK  }}"
+
+- name: Supprimer les doublons de la liste
+  set_fact:
+    ip_list: "{{ ip_list | unique | select('defined') | reject('equalto', 'None') | list }}"
+
+- name: Reformater la liste pour la réécriture
+  set_fact:
+    blacklist_string: 'blacklist="{ {{ ip_list | join(" ") }} }"'
+
+- name: Réécrire la blacklist dans le fichier
+  lineinfile:
+    path: "/etc/pf.conf"
+    regexp: "^blacklist="
+    line: "{{ blacklist_string }}"
+    create: yes
+  become: true
+
+- name: add block in rule
+  lineinfile:
+    path: "/etc/pf.conf"
+    line: "block in from { blacklist } to any"
+  become: true
+
+- name: add block out rule
+  lineinfile:
+    path: "/etc/pf.conf"
+    line: "block out from any to  { blacklist }"
+  become: true
+

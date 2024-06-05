@@ -1,0 +1,57 @@
+---
+- name: Check if the file exists
+  stat:
+    path: /etc/wireguard/ansible/server.key
+  register: file_stat
+  when: "'servers' in group_names"
+
+- name: Generate Keyz
+  shell:
+    cmd: "wg genkey | tee server.key | wg pubkey > server.pub"
+    chdir: /etc/wireguard/ansible
+  when: "'servers' in group_names and (not file_stat.stat.exists or file_stat.stat.size == 0) "
+
+- name: get remote file contents
+  command: "cat /etc/wireguard/ansible/server.pub"
+  register: server_pub_key
+  when: "'servers' in group_names"
+
+- name: get remote file contents
+  command: "cat /etc/wireguard/ansible/server.key"
+  register: server_private_key
+  when: "'servers' in group_names"
+
+- name: set servers vars
+  ansible.builtin.set_fact:
+    SERVER_PUBLIC_KEY: "{{ server_pub_key.stdout }}"
+    SERVER_PRIVATE_KEY: "{{ server_private_key.stdout }}"
+  when: "'servers' in group_names"
+
+- name: Creates config directory
+  ansible.builtin.file:
+    path: /etc/wireguard/ansible/{{ item.name }}
+    state: directory
+    mode: "0755"
+  with_items:
+    - "{{ WIREGUARD_USERS }}"
+
+- name: Generate Clients Keys
+  include_tasks: gen_clients_keys.yml
+  loop: "{{ WIREGUARD_USERS }}"
+  loop_control:
+    loop_var: item
+
+- name: Build template list
+  include_tasks: build_template_list.yml
+  loop: "{{ WIREGUARD_USERS }}"
+  loop_control:
+    loop_var: item
+
+- name: Template a file to /etc/file.conf
+  ansible.builtin.template:
+    src: server.conf.j2
+    dest: /etc/wireguard/ansible/wg0.conf
+    owner: root
+    group: wheel
+    mode: "0644"
+  when: "'servers' in group_names"
