@@ -11,5 +11,5 @@
 
   roles:
     - role: ./wg_installation
-    - role: ./wg_add_user
+    - role: ./wg_config_server
     - role: ./wg_add_users

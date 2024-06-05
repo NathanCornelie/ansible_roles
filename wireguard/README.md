@@ -24,11 +24,15 @@ WIREGUARD_USERS:
       - 10.0.0.2
       - 10.0.0.4
 
-  - name: MarieLaS
+  - name: MarieLaS 
     ips:
       - 10.0.0.3
       - 10.0.0.5
 ```
+
+## Suppression user
+
+Pour supprimer un utilisateur il suffit de le supprimmer de la liste presente dans la variable `WIREGUARD_USERS`.
 
 La commande pour exécuter ce playbook est la suivante:
 
