@@ -6,11 +6,6 @@
   register: package_check
   ignore_errors: true
 
-- name: "Print execution results"
-  debug:
-    msg: "Package is installed"
-  when: package_check is succeeded
-
 - name: Install WireGuard on the OpenBSD machine
   command: " pkg_add wireguard-tools"
   become: yes

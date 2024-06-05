@@ -17,11 +17,6 @@
     chdir: /etc/wireguard/ansible
   when: not file_stat.stat.exists or file_stat.stat.size == 0
 
-- name: Generate Public key
-  shell:
-    cmd: "cat server.key | wg pubkey > server.pub"
-    chdir: /etc/wireguard/ansible
-
 - name: get remote file contents
   command: "cat /etc/wireguard/ansible/server.key"
   register: key
