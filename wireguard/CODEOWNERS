@@ -1,0 +1,49 @@
+# This is an example of a CODEOWNERS file.
+# Lines that start with `#` are ignored.
+# teams
+@dev-team marc-abel.bisch
+@exploit-team marc-abel.bisch herve.hentzen
+# app/ @commented-rule
+
+# Specify a default Code Owner by using a wildcard:
+* @marc-abel.bisch
+
+# Specify multiple Code Owners by using a tab or space:
+* @marc-abel.bisch
+
+# Rules defined later in the file take precedence over the rules
+# defined before.
+# For example, for all files with a filename ending in `.rb`:
+*.[y?ml] @marc-abel.bisch
+
+# Files with a `#` can still be accessed by escaping the pound sign:
+\#file_with_pound.rb @owner-file-with-pound
+
+# Specify multiple Code Owners separated by spaces or tabs.
+# In the following case the CODEOWNERS file from the root of the repo
+# has 3 Code Owners (@multiple @code @owners):
+CODEOWNERS @marc-abel.bisch @jules.debra @adrien.palmieri
+
+# You can use both usernames or email addresses to match
+# users. Everything else is ignored. For example, this code
+# specifies the `@legal` and a user with email `janedoe@gitlab.com` as the
+# owner for the LICENSE file:
+LICENSE @marc-abel.bisch
+
+# Use group names to match groups, and nested groups to specify
+# them as owners for a file:
+README @marc-abel.bisch
+
+# Code Owners section:
+[Documentation]
+ee/docs    @docs
+docs       @docs
+
+# Use of default owners for a section. In this case, all files (*) are owned by
+the dev team except the README.md and data-models which are owned by other teams.
+[Development] @dev-team
+*
+
+# This section is combined with the previously defined [Documentation] section:
+[DOCUMENTATION]
+README.md  @docs

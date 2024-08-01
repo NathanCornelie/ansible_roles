@@ -1,10 +1,12 @@
-all: 
-  children: 
-    servers:  
-        hosts:
-          bsd: 
-            ansible_host: 172.30.12.2
-    clients: 
-      hosts: 
-        nathan:
-          ansible_host: 172.30.12.3
+---
+all:
+  children:
+    servers:
+      hosts:
+        bsd:
+          ansible_host: 172.30.12.7
+          ansible_become_method: doas
+
+        mainServ:
+          ansible_host: localhost
+          ansible_become_method: sudo

@@ -9,33 +9,47 @@ Dans ce projet, on retrouve 3 rôles qui permettent d'installer Wireguard sur un
   - Créer les clés des clients.
   - Ajouter les nouveaux clients dans la configuration du serveur.
 
-## Identification
+## Requirements
 
-Les identifiants et les mots de passe des machines sont dans des fichiers chiffrés vault.yml dans les répertoires `group_vars/clients/` ou `group_vars/servers/` , dont la clé de déchiffrement est demandée au lancement du playbook.
+Le serveur cible doit être un OpenBSD. (testé sur BSD7.5)
+Python 3 doit être installé sur celui-ci.
+Le package wireguard-tools doit être installé manuellement. (pkg_add wireguard_tools)
+La/Les configurations des instances wireguards serveur doivent être créée manuellement (création de la paire de clé)
+
+```bash
+$ umask 077
+$ wg genkey > instance_name.key
+$ wg pubkey < instance_name.key > instance_name.pub
+```
+
+wg0.conf example configuration: 
+
+```bash
+$ cat /etc/wireguard/instance_name/wg0.conf
+[Interface]
+PrivateKey=maximumsecurityprivatekey=
+ListenPort=51820
+Address = 192.168.0.1/24
+```
+
+Les ouvertures firewalls nécéssaire sont également à mettre en place.
+
+
+## Execution
+```
+ansible-playbook -i inventory.yml playbook.yml
+```
 
 ## Ajout de nouveaux utilisateurs
 
-Pour ajouter un nouvel utilisateur à la configuration du VPN, il suffit de l'ajouter au fichier `group_vars/servers/vars.yml` dans la variable `WIREGUARD_USERS`, ainsi que les IP avec lesquelles cet utilisateur va se connecter.
+Rajouter les nom des utilisateurs à la liste "USER" définie par instances.
 
 ```yml
-WIREGUARD_USERS:
-  - name: CornelieNathan
-    ips:
-      - 10.0.0.2
-      - 10.0.0.4
+USERS:
+  - MITNICK_Kevin
 
-  - name: MarieLaS 
-    ips:
-      - 10.0.0.3
-      - 10.0.0.5
 ```
 
 ## Suppression user
 
 Pour supprimer un utilisateur il suffit de le supprimmer de la liste presente dans la variable `WIREGUARD_USERS`.
-
-La commande pour exécuter ce playbook est la suivante:
-
-```bash
-ansible-playbook -i inventory.yml playbook.yml --ask-vault-password
-```

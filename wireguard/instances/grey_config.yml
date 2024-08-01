@@ -1,0 +1,11 @@
+instance_name: grey
+instance_port: 51822
+instance_interface: wg2
+instance_clients_range: 172.16.168.0/22
+instance_endpoint: 172.16.168.1/22
+instance_authorized_ips: 10.0.0.0/12
+instance_dns: 8.8.8.8, 1.1.1.1
+
+USERS:
+  - DEBRA_Jules
+  - CORNELIE_Nathan

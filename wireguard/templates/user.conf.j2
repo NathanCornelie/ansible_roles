@@ -1,0 +1,9 @@
+[Interface] 
+PrivateKey = {{ user_private_key }}
+DNS = {{ instance_dns }}
+Address = {{ user_ip }}
+
+[Peer]
+PublicKey = {{ instance_public_key }} 
+AllowedIPs = {{ instance_authorized_ips}}
+Endpoint = {{instance_endpoint}}:51820

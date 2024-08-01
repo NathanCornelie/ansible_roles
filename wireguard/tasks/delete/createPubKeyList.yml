@@ -1,0 +1,12 @@
+---
+- name: get user pub key
+  slurp:
+    src: "{{ client_path }}/{{user}}/key.pub"
+  register: user_public_key_content
+- name: Set instance variable
+  set_fact:
+    user_public_key: "{{ user_public_key_content.content | b64decode | replace('\n','')}}"
+
+- name: put key in list
+  set_fact:
+    USERS_PUBLIC_KEYS: "{{ USERS_PUBLIC_KEYS + [ user_public_key ] }}"

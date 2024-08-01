@@ -1,0 +1,8 @@
+---
+CONFIG_PATH: ansible
+PORT: 443
+IP_RANGE: 1
+
+installed_instances:
+  - lux
+  - grey

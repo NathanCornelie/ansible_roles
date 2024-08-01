@@ -1,0 +1,111 @@
+instance_name: lux
+instance_hostname: bsd
+instance_port: 51820
+instance_interface: wg0
+instance_clients_range: 172.16.160.0/22
+instance_vpn_ip: 172.16.160.1/32
+instance_endpoint: 172.30.12.7
+instance_authorized_ips: 172.16.160.1/32, 10.0.0.0/24
+instance_dns: 8.8.8.8, 1.1.1.1
+
+USERS:
+  - MARTIN_Jean
+  - BERNARD_Marie
+  # - DUBOIS_Pierre
+  # - THOMAS_Claire
+  # - ROBERT_Luc
+  # - RICHARD_Anne
+  # - PETIT_Paul
+  # - LEROY_Elise
+  # - MOREAU_Julien
+  # - SIMON_Laura
+  # - LAURENT_Maxime
+  # - LEFEVRE_Alice
+  # - MICHEL_Nicolas
+  # - DAVID_Emma
+  # - BERTRAND_François
+  # - ROUX_Léa
+  # - VINCENT_Alexandre
+  # - FERNANDEZ_Sophie
+  # - LEGRAND_Thomas
+  # - MARTINEZ_Charlotte
+  # - GARNIER_Sébastien
+  # - FAURE_Isabelle
+  # - RIVIERE_Arnaud
+  # - DUMONT_Amélie
+  # - LAMBERT_Thierry
+  # - BONNET_Valérie
+  # - FRANCOIS_Jacques
+  # - MARTY_Christine
+  # - CARON_Lucie
+  # - GERARD_Eric
+  # - ROUSSEAU_Véronique
+  # - BLANCHARD_Fabien
+  # - MEUNIER_Cécile
+  # - BLANC_Florian
+  # - GAUTHIER_Odile
+  # - PERRIN_Yannick
+  # - GILBERT_Sandra
+  # - LENOIR_Remi
+  # - BENOIT_Nadine
+  # - FOURNIER_Quentin
+  # - MASSON_Juliette
+  # - BRUN_Franck
+  # - MARTEL_Sandra
+  # - MILLET_Philippe
+  # - MARCHAND_Camille
+  # - DUVAL_Antoine
+  # - DENIS_Virginie
+  # - RENAULT_Michel
+  # - JOLY_Elodie
+  # - ROY_Guillaume
+  # - NOEL_Corinne
+  # - MEYER_Grégoire
+  # - DUFOUR_Bruno
+  # - BARRE_Laurent
+  # - GUERIN_Aurore
+  # - BOYER_Jean-Pierre
+  # - PEREZ_Béatrice
+  # - BONNET_Cédric
+  # - SCHMITT_Amélie
+  # - ROLLAND_Louis
+  # - OLIVIER_Hélène
+  # - PHILIPPE_Georges
+  # - LECLERC_Karine
+  # - BOUCHER_Renée
+  # - DUHAMEL_Mathieu
+  # - GIRARD_Caroline
+  # - BRUNET_Benoît
+  # - LAMBERT_Maud
+  # - JACQUET_Eloi
+  # - MICHAUD_Coralie
+  # - MASSE_Florent
+  # - SANCHEZ_Eva
+  # - GROS_Corentin
+  # - LACROIX_Monique
+  # - HALIMI_Jonathan
+  # - FABRE_Lydie
+  # - CHEVALIER_Damien
+  # - RAULT_Alexis
+  # - DAUPHIN_Emilie
+  # - LANGLOIS_Gabriel
+  # - BRIAND_Jade
+  # - LEMAIRE_Louise
+  # - FLEURY_Baptiste
+  # - VIDAL_Adrien
+  # - POIRIER_Manon
+  # - REY_Hugo
+  # - VALETTE_Agnès
+  # - DUPUIS_Cyril
+  # - PAYET_Lucile
+  # - HENRY_Edith
+  # - GRIMAUD_Solène
+  # - RIVIER_Pierre-Louis
+  # - MORIN_Charlotte
+  # - LEBLANC_Catherine
+  # - LEVY_Amandine
+  # - PELTIER_Raymond
+  # - LEVERRIER_Thomas
+  # - BARON_Antoine
+  # - COSTE_Romain
+  # - LECOMTE_Anaïs

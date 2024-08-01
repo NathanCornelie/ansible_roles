@@ -1,0 +1,18 @@
+---
+- name: add users to config
+  ansible.builtin.blockinfile:
+    path: "/etc/wireguard/{{instance_name}}/{{ instance_interface }}.conf"
+    marker_begin: "# {{client['name']}}"
+    block: |
+      [Peer]
+      PublicKey = {{ client['public_key'] }}
+      AllowedIPs = {{ client['ip']}}
+
+  loop: "{{ TEMPLATE_USERS }}"
+  loop_control:
+    loop_var: "client"
+
+- name: apply config
+  shell:
+    cmd: "wg syncconf {{ instance_interface }} <(wg-quick strip /etc/wireguard/{{instance_name}}/{{ instance_interface }}.conf) "
+    executable: /usr/local/bin/bash

@@ -1,0 +1,24 @@
+---
+- name: set var user_ips in instance
+  set_fact:
+    user_ip: "{{  user_ips | first}}"
+    user_ips: "{{ user_ips[1:] }}"
+
+- name: set var user_ips in mainServ
+  set_fact:
+    user_ip: "{{ hostvars[instance_hostname]['user_ip']}}"
+
+  delegate_to: mainServ
+
+- name: Create Client config
+  include_tasks:
+    file: tasks/add/createConfigClients.yml
+    apply:
+      become: true
+
+- name: Create and apply Server config
+  include_tasks:
+    file: tasks/add/createConfigServer.yml
+    apply:
+      become: true
+

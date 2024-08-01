@@ -1,0 +1,63 @@
+---
+- name: Sort new Users
+  include_tasks:
+    file: tasks/add/getNewUsers.yml
+    apply:
+      become: true
+      tags:
+        - add
+      delegate_to: mainServ
+  loop: "{{ USERS }}"
+  loop_control:
+    loop_var: "user"
+
+- name: find users to del
+  include_tasks:
+    file: tasks/add/getDelUsers.yml
+    apply:
+      become: true
+      tags:
+        - add
+      delegate_to: mainServ
+
+- name: set number of new users
+  set_fact:
+    new_users_length: "{{ NEW_USERS | length }}"
+    del_users_length: "{{ DEL_USERS | length }}"
+  delegate_to: mainServ
+  tags:
+    - add
+
+- name: EXIT "Nothing to do ..."
+  ansible.builtin.meta: end_host
+  when:
+    - new_users_length == '0'
+    - del_users_length == '0'
+  tags:
+    - add
+
+- name: NEW USERTS
+  debug:
+    msg: "{{NEW_USERS}}"
+
+- name: Add's tasks
+  include_tasks:
+    file: tasks/add/add.yml
+    apply:
+      become: true
+  when:
+    - new_users_length != '0'
+
+- name: Del's tasks
+  include_tasks:
+    file: tasks/add/del.yml
+    apply:
+      become: true
+  when:
+    - del_users_length != '0'
+
+- name: Update server conf
+  include_tasks:
+    file: tasks/add/update_server_conf.yml
+    apply:
+      become: true

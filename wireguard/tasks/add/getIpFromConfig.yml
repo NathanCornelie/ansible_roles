@@ -1,0 +1,25 @@
+--- 
+- name: Read the file content
+  slurp:
+    src: "{{ client_path }}/{{ instance_name}}/{{ user }}/wg0.conf"
+  register: file_content
+  when: "inventory_hostname == 'mainServ' "
+
+- name: Decode the file content
+  set_fact:
+    file_content_decoded: "{{ file_content.content | b64decode }}"
+  when: "inventory_hostname == 'mainServ' "
+
+- name: Extract IP address using regex
+  set_fact:
+    user_ip: "{{ file_content_decoded | regex_search('Address\\s*=\\s*(\\S+)', '\\1')}}"
+  when: "inventory_hostname == 'mainServ' "
+
+- name: Extract IP address using regex
+  set_fact:
+    user_ip: "{{ user_ip[0] }}"
+  when: "inventory_hostname == 'mainServ' "
+
+- name: set var user_ip in server
+  set_fact:
+    user_ip: "{{ hostvars['mainServ']['user_ip'] }}"

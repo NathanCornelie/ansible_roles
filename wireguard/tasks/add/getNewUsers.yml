@@ -1,0 +1,9 @@
+- name: Check if the config file exists
+  stat:
+    path: "{{ client_path }}/{{user}}/wg0.conf"
+  register: conf_exist
+
+- name: set is_config for bsd
+  set_fact:
+    NEW_USERS: "{{ NEW_USERS + [ user ] }}"
+  when: not conf_exist.stat.exists

@@ -1,0 +1,41 @@
+---
+- name: Read the content of the user private key file
+  slurp:
+    src: "{{ client_path }}/{{ user }}/key.priv"
+  register: user_private_key_content
+  delegate_to: mainServ
+
+- name: Read the content of the server public key file
+  slurp:
+    src: "/etc/wireguard/{{instance_name}}/{{instance_name}}.pub"
+  register: instance_public_key_content
+
+- name: Read the content of the server private key file
+  slurp:
+    src: "/etc/wireguard/{{instance_name}}/{{instance_name}}.key"
+  register: instance_private_key_content
+
+- name: Read the content of the user pub key file
+  slurp:
+    src: "{{ client_path }}/{{user}}/key.pub"
+  register: user_public_key_content
+  delegate_to: mainServ
+
+- name: Set instance variable
+  set_fact:
+    instance_public_key: "{{ instance_public_key_content.content | b64decode }}"
+    instance_private_key: "{{ instance_private_key_content.content | b64decode }}"
+
+- name: Set user variable
+  set_fact:
+    user_public_key: "{{ user_public_key_content.content | b64decode }}"
+    user_private_key: "{{ user_private_key_content.content | b64decode }}"
+    instance_public_key: "{{ hostvars[instance_hostname]['instance_public_key'] }}"
+  delegate_to: mainServ
+
+- name: Template a config file
+  ansible.builtin.template:
+    src: user.conf.j2
+    dest: "{{ client_path }}/{{ user }}/wg0.conf"
+    mode: "0644"
+  delegate_to: mainServ

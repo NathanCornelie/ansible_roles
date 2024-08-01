@@ -1,0 +1,13 @@
+---
+instance_name: instance_admin
+instance_hostname: bsd
+instance_port: 51820
+instance_interface: wg0
+instance_clients_range: 192.168.0.0/24
+instance_vpn_ip: 192.168.0.1/24
+instance_endpoint: pufflefish.lab.corp.excellium-service.com
+instance_authorized_ips: 192.168.0.0/24
+instance_dns: 8.8.8.8, 1.1.1.1
+
+USERS:
+  - DEBRA_Jules

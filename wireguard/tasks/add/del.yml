@@ -1,0 +1,9 @@
+---
+- name: Del's tasks
+  include_tasks:
+    file: tasks/add/delUsersConfigServer.yml
+    apply:
+      become: true
+  loop: "{{ DEL_USERS }}"
+  loop_control:
+    loop_var: "user"

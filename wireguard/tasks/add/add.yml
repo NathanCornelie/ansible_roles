@@ -1,0 +1,25 @@
+- name: Upload python script "get_available_ips"
+  ansible.builtin.copy:
+    src: files/get_available_ips.py
+    dest: /tmp/get_available_ips.py
+    owner: root
+    mode: 0755
+    force: no
+
+- name: Get available ip for Client
+  become: true
+  command: "python3.11 /tmp/get_available_ips.py /etc/wireguard/{{ instance_name}}/{{ instance_interface }}.conf {{ instance_clients_range }} {{ new_users_length }}"
+  register: user_ips_script
+
+- name: set user_ips
+  set_fact:
+    user_ips: "{{ user_ips_script.stdout | from_yaml }}"
+
+- name: Generate Clients Keys
+  include_tasks:
+    file: tasks/add/configWG.yml
+    apply:
+      become: true
+  loop: "{{ NEW_USERS }}"
+  loop_control:
+    loop_var: "user"

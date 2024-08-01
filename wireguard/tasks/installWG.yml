@@ -1,0 +1,11 @@
+---
+# tasks file for wireguard_installation
+
+- name: Verify Installation
+  shell: "pkg_info | grep wireguard-tools"
+  register: package_check
+  ignore_errors: true
+
+- name: Install WireGuard on the OpenBSD machine
+  command: "pkg_add wireguard-tools"
+  when: package_check is failed

@@ -1,0 +1,5 @@
+---
+- name: Generate keys for user
+  shell:
+    cmd: "wg genkey | tee key.priv | wg pubkey > key.pub"
+    chdir: "{{client_path}}/{{ user }}"

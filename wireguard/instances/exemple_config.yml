@@ -1,0 +1,16 @@
+instance_name: # <name> ex: lux #* name of VPN instance
+instance_hostname: # <hostname> ex: firewall1 #* server's hostname where the VPN instance is installed
+instance_port: # <PORT> ex: 51820 #* VPN instance port
+instance_interface: # <interface> ex: wg0 # *  name of the interface dedicated to the VPN instance
+instance_clients_range: # <ip> ex: 172.16.160.0/22 #* range of ip for the VPN instance
+instance_endpoint: # <ip | hostname> #* public IP of the VPN server
+instance_authorized_ips: # <ip1 , ip2 , ... > #* IP that we can reach through the VPN
+instance_dns: # <ip, ip2 , ... > ex : 8.8.8.8 , 1.1.1.1 #* DNS to use with VPN
+instance_vpn_ip: # <ip>  ex: 172.16.160.1/32 #* addresse ip du server pour le vpn
+
+USERS: #* user who we'll use the VPN
+#Ex :
+# - CORNELIE_Nathan
+# - BOUL_bile
+# - MOMO_Marie
+# - COCA_Cola

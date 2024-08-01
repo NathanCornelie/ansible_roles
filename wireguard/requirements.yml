@@ -1,0 +1,6 @@
+---
+roles:
+  - src: https://gitlab.siginet.lu/infrastructure/operations/ansible/sigi-ansible-wireguard.git
+    version: main
+    scm: git
+    name: sigi-ansible-wireguard

@@ -1,0 +1,19 @@
+- name: find user dirs
+  find:
+    paths: "{{ client_path }}/"
+    file_type: directory
+  register: found_dirs
+
+- name: Extract directory names
+  set_fact:
+    dir_names: "{{ found_dirs.files | map(attribute='path') | map('basename') | list }}"
+
+- name: debug
+  debug:
+    msg: "{{ dir_names}}"
+
+- name: set is_config for bsd
+  set_fact:
+    DEL_USERS: "{{ DEL_USERS + [ item ] }}"
+  when: " item  not in USERS"
+  loop: "{{ dir_names }}"

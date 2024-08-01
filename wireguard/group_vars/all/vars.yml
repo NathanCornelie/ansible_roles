@@ -1,1 +1,2 @@
-ansible_become_user: root 
+---
+client_path: /etc/wireguard/{{instance_name}}/clients

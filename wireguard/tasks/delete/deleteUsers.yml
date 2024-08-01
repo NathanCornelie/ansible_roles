@@ -1,0 +1,10 @@
+---
+- name: create public key list
+  include_tasks:
+    file: delete/createPubKeyList.yml
+    apply:
+      become: true
+
+  when: "inventory_hostname == 'mainServ'"
+
+  

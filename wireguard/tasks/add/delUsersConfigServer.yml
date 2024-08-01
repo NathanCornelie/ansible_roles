@@ -1,0 +1,40 @@
+- name: get user pub key
+  slurp:
+    src: "{{ client_path }}/{{user}}/key.pub"
+  register: user_public_key_content
+  delegate_to: mainServ
+
+- name: get user conf
+  slurp:
+    src: "{{ client_path }}/{{user}}/wg0.conf"
+  register: user_conf_content
+  delegate_to: mainServ
+
+- name: Set instance variable
+  set_fact:
+    user_public_key: "{{ user_public_key_content.content | b64decode | replace('\n', '') }}"
+    user_ip: "{{ user_conf_content.content | b64decode | regex_search('^Address =\\s*(.*)', '\\1',  multiline=True) | first}}"
+  delegate_to: mainServ
+
+- name: debug
+  debug:
+    msg:
+      - "{{user}}"
+      - "{{user_public_key}}"
+      - "{{user_ip}}"
+
+- name: del users from config
+  ansible.builtin.blockinfile:
+    state: absent
+    path: "/etc/wireguard/{{instance_name}}/{{ instance_interface }}.conf"
+    marker_begin: "# {{user}}"
+    block: |
+      [Peer]
+      PublicKey = {{ user_public_key }} 
+      AllowedIPs = {{user_ip}}
+
+- name: delete user dir
+  ansible.builtin.file:
+    path: "{{ client_path }}/{{ user }}"
+    state: absent
+  delegate_to: mainServ

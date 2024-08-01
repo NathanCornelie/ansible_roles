@@ -1,0 +1,11 @@
+---
+- name: create User dict
+  set_fact:
+    user_template:
+      name: "{{ user }}"
+      ip: "{{ user_ip}}"
+      public_key: "{{ user_public_key | replace('\n', '')}}"
+
+- name: add User to template list
+  set_fact:
+    TEMPLATE_USERS: "{{ TEMPLATE_USERS + [ user_template ]}}"

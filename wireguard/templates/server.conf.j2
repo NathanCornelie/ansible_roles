@@ -1,0 +1,13 @@
+[Interface] 
+PrivateKey = {{ instance_private_key }}
+ListenPort = {{ instance_port }}
+Address = {{ instance_vpn_ip }}
+
+{% for client in TEMPLATE_USERS %}
+
+[Peer]
+# {{client['name']}}
+PublicKey = {{ client['public_key'] }} 
+AllowedIPs = {{ client['ip']}}
+
+{% endfor%}  

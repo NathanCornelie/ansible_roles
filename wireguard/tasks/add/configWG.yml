@@ -1,0 +1,21 @@
+---
+# TODO trouver une autre facon de stocker les creds des utilisateurs
+
+- name: Create a user directory
+  file:
+    path: "{{ client_path }}/{{ user }}"
+    state: directory
+  delegate_to: mainServ
+
+- name: Generate keys for user
+  shell:
+    cmd: "wg genkey | tee key.priv | wg pubkey > key.pub"
+    chdir: "{{client_path}}/{{ user }}"
+  delegate_to: mainServ
+
+- name: create Config for client and Server
+  include_tasks:
+    file: tasks/add/createConfig.yml
+    apply:
+      become: true
+
